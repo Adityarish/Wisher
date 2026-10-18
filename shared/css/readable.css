@@ -1,0 +1,110 @@
+/* Readability layer, loaded last.
+   1. Light-designed panels keep dark ink when the page is in dark mode.
+   2. Buttons, labels and tile numbers keep enough contrast on any accent colour.
+   3. The letter is a real sheet of paper with its own ink.
+   4. Text zooms a little on hover and never disappears. */
+
+/* ---------- 1. light panels inside a dark page ---------- */
+:is(html[data-appearance="dark"]:not([data-theme="light"]), html[data-theme="dark"]):not(.scheme-dark)
+:is(.birthday-hero,.scrapbook-hero,.scrapbook-note,.invitation-hero,.wish-overlay,.friendship-hero,.friend-photo,.modular-hero){
+  --bg:#fffaf6;--surface:#fff;--text:#291f25;--muted:#5f545a;--line:#291f2524;
+  color:var(--text);color-scheme:light}
+:is(html[data-appearance="dark"]:not([data-theme="light"]), html[data-theme="dark"]):not(.scheme-dark){
+  .birthday-hero{--bg:#ffe4dc;--text:#3e2f42;--muted:#5d4d60}
+  .scrapbook-hero{--bg:#f8eccf;--text:#362f28;--muted:#5e5348}
+  .scrapbook-note{--bg:#fffaf0;--surface:#fffaf0;--text:#362f28;--muted:#5e5348}
+  .invitation-hero{--bg:#f6f2e7;--text:#34372e;--muted:#5b5d52}
+  .wish-overlay{--bg:#fffdf7;--text:#302a23;--muted:#665a4d}
+  .friendship-hero{--bg:#92e1db;--text:#17275c;--muted:#2b3b72}
+  .friend-photo{--bg:#fff;--text:#17275c;--muted:#2b3b72}
+  .modular-hero{--bg:#fff;--text:#17202a;--muted:#4c5663}
+  .note,.sticker-label,.doodle{color:#17275c}
+}
+
+/* ---------- 2. contrast ---------- */
+.eyebrow,.hero__recipient{color:color-mix(in srgb,var(--accent) 70%,var(--text))}
+.wow .button:not(.button--quiet){
+  background:linear-gradient(120deg,color-mix(in srgb,var(--wow-a) 72%,#1d0e19),color-mix(in srgb,var(--wow-b) 72%,#1d0e19));
+  color:#fff;text-shadow:0 1px 2px #0005}
+.surprise-card .button{background:color-mix(in srgb,var(--accent) 72%,#1d0e19);color:#fff}
+.heart-tile:not(.is-opened) span{color:#5a1030;font-weight:800}
+.wow .story-number{background:none;-webkit-text-fill-color:currentColor;color:var(--accent)}
+.lead,.hero .lead{color:color-mix(in srgb,var(--muted) 78%,var(--text))}
+h1,h2,h3,.hero h1{text-shadow:none}
+
+/* ---------- 3. the letter ---------- */
+.letter-section .letter-shell{
+  --surface:#fffaf0;--text:#3b2530;--muted:#6f5560;--line:#e3b8c3;
+  position:relative;max-width:780px;padding:clamp(2.2rem,6vw,4.5rem) clamp(1.6rem,6vw,4.5rem) clamp(1.8rem,5vw,3rem) clamp(2.6rem,8vw,6rem);
+  border:0;border-radius:6px;color:var(--text);
+  background:
+    linear-gradient(90deg,transparent clamp(1.9rem,6vw,4.6rem),#e5738a55 clamp(1.9rem,6vw,4.6rem),#e5738a55 calc(clamp(1.9rem,6vw,4.6rem) + 2px),transparent calc(clamp(1.9rem,6vw,4.6rem) + 2px)),
+    linear-gradient(180deg,#fffdf7,#fff6e8);
+  box-shadow:0 1px 0 #fff inset,0 2px 0 #f1dfc8,0 4px 0 #fffaf0,0 6px 0 #ecd9c2,0 34px 70px color-mix(in srgb,var(--rose-deep,#a8325a) 28%,transparent);
+  transform:rotate(-.4deg)}
+.letter-section .letter-shell::before{content:"♥";position:absolute;top:-1.15rem;left:50%;translate:-50% 0;display:grid;place-items:center;width:2.3rem;height:2.3rem;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#ff6f8f,#a8143d);color:#ffe0e8;box-shadow:0 6px 14px #0004}
+.letter-section .letter-copy{
+  margin:0 0 1.6rem;font-size:clamp(1.1rem,2vw,1.35rem);line-height:2.1rem;color:var(--text);max-height:15rem;
+  background:repeating-linear-gradient(transparent 0 calc(2.1rem - 1px),#e3b8c366 calc(2.1rem - 1px) 2.1rem);
+  text-wrap:pretty}
+.letter-section .letter-copy::after{height:6rem;background:linear-gradient(transparent,#fff6e8)}
+.letter-section .letter-copy.is-expanded{max-height:160rem}
+.letter-section .button--quiet{color:#7a2742;border-color:#d9a3b1;background:#fff;font-weight:800}
+.letter-section .button--quiet:hover{background:#7a2742;color:#fff}
+
+.lovemail{gap:2.2rem}
+.lovemail__paper{
+  color:#3b2530;padding:clamp(2.4rem,6vw,4.5rem) clamp(1.6rem,6vw,4.5rem) clamp(2rem,5vw,3.2rem) clamp(2.6rem,8vw,6rem);
+  background:
+    linear-gradient(90deg,transparent clamp(1.9rem,6vw,4.6rem),#e5738a55 clamp(1.9rem,6vw,4.6rem),#e5738a55 calc(clamp(1.9rem,6vw,4.6rem) + 2px),transparent calc(clamp(1.9rem,6vw,4.6rem) + 2px)),
+    repeating-linear-gradient(transparent 0 calc(2.1rem - 1px),#e3b8c366 calc(2.1rem - 1px) 2.1rem),
+    linear-gradient(180deg,#fffdf7,#fff4e6);
+  box-shadow:0 2px 0 #f1dfc8,0 5px 0 #fffaf0,0 7px 0 #ecd9c2,0 40px 80px color-mix(in srgb,var(--rose-deep) 35%,transparent)}
+.lovemail__text{color:#3b2530;font-size:clamp(1.1rem,2.1vw,1.4rem);line-height:2.1rem}
+.lovemail__sign{color:#a8325a;font-size:1.25rem;font-style:italic}
+.lovemail__skip{color:#7a2742;border-color:#d9a3b1;background:#fff}
+.envelope__hint{color:var(--accent);text-shadow:0 1px 0 color-mix(in srgb,var(--bg) 70%,transparent);font-size:.9rem}
+
+/* ---------- 4. hover = a little zoom ---------- */
+.wow :is(h2,h3):not(.reveal-on-scroll){transition:scale .3s cubic-bezier(.2,1.4,.4,1);transform-origin:left center}
+.wow :is(h2,h3):not(.reveal-on-scroll):hover{scale:1.03}
+.lovemail__text,.letter-copy,.lead{transition:scale .3s}
+.site-nav__links a{transition:transform .25s cubic-bezier(.2,1.4,.4,1),color .2s,background .2s}
+.site-nav__links a:hover{transform:scale(1.08)}
+
+@media(max-width:720px){
+  .letter-section .letter-shell{transform:none;padding-inline:clamp(1.6rem,8vw,2.4rem) 1.2rem;background:linear-gradient(180deg,#fffdf7,#fff6e8)}
+  .lovemail__paper{padding-inline:clamp(1.6rem,8vw,2.4rem) 1.2rem;
+    background:repeating-linear-gradient(transparent 0 calc(2.1rem - 1px),#e3b8c366 calc(2.1rem - 1px) 2.1rem),linear-gradient(180deg,#fffdf7,#fff4e6)}
+}
+@media(prefers-reduced-motion:reduce){.wow h1.is-split .char:hover,.site-nav__links a:hover{transform:none}.wow :is(h2,h3):hover{scale:1}}
+
+/* ---------- 5. dark-designed templates with cream paper panels (7, 10, 11) ----------
+   Their --surface is cream but --text is cream too, so every cream panel gets its own dark ink. */
+:is(.template-7,.template-10,.template-11){
+  --paper-ink:#2b2029;--paper-muted:#65585f;
+}
+:is(.template-7,.template-10,.template-11)
+:is(.story-card,.event-card,.timeline-item,.voice-card,.media-card,.video-card,.gallery-card,.closing-section,.letter-shell,.intimate-message figcaption){
+  --text:var(--paper-ink);--muted:var(--paper-muted);--line:#2b202922;color:var(--text)}
+:is(.template-7,.template-10,.template-11) :is(.story-card,.event-card,.timeline-item,.voice-card){
+  background:var(--surface);backdrop-filter:none;border-color:#2b202920}
+.template-7 :is(.story-card,.event-card,.timeline-item,.voice-card,.closing-section,.letter-shell){--accent:#a8445f;--accent-2:#7d3446}
+.template-10 :is(.story-card,.event-card,.timeline-item,.voice-card,.closing-section){--accent:#a36f00;--accent-2:#c2362b}
+.template-11 :is(.story-card,.event-card,.timeline-item,.voice-card,.closing-section,.letter-shell){--accent:#9b5b00;--accent-2:#b8362f}
+:is(.template-7,.template-10,.template-11) .closing-section .credit{color:var(--paper-muted)}
+:is(.template-7,.template-10,.template-11) :is(.story-card,.event-card,.timeline-item,.voice-card) h3{color:var(--paper-ink)}
+
+/* ---------- 6. palette audit fixes ---------- */
+/* the small label on the coloured "one more thing" card follows the card's own text colour */
+.surprise-card .eyebrow{color:currentColor;background:color-mix(in srgb,currentColor 16%,transparent)}
+.surprise-card h2,.surprise-card p{color:inherit}
+/* tight tracking on all-caps headlines made letters touch ("ALITTLE") */
+.neon-hero h1,.achievement-copy h1{letter-spacing:-.02em}
+.template-12 h1,.modular-hero h1{letter-spacing:-.025em}
+/* template 12 lays the letter out in two columns, which squeezes the paper and the button */
+.letter-section .letter-shell{display:block;grid-template-columns:none}
+.letter-section .letter-shell .button{position:static;width:auto}
+.wow .eyebrow{width:fit-content;max-width:100%}
+.surprise-card .eyebrow{display:block;margin:0 auto 1.2rem}

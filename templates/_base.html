@@ -1,0 +1,93 @@
+{% import '_macros.html' as ui %}
+<!doctype html>
+<html lang="{{ content.language|default('en') }}"{% if template.scheme == 'dark' %} class="scheme-dark"{% endif %} data-animation="{{ content.theme.animation_intensity }}" data-density="{{ content.theme.decoration_density }}" data-appearance="{{ content.theme.appearance }}" data-font="{{ content.theme.font_pairing }}" data-palette="{{ content.theme.palette }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{ content.theme.accent_color or template.default_colors[0] }}">
+  <meta name="description" content="{{ content.subtitle or content.message|truncate(150) }}">
+  {% set share_image = content.media.social_preview or content.media.hero %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ content.title }}{% if content.recipient_names %} · {{ content.recipient_names|join(' & ') }}{% endif %}">
+  <meta property="og:description" content="{{ content.subtitle or content.message|truncate(150) }}">
+  {% if share_image %}<meta property="og:image" content="{{ share_image }}">{% endif %}
+  <meta name="twitter:card" content="{{ 'summary_large_image' if share_image else 'summary' }}">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E{{ '%E2%9D%A4%EF%B8%8F' if content.love_mode else '%F0%9F%8E%89' }}%3C/text%3E%3C/svg%3E">
+  <title>{{ content.title }}{% if content.recipient_names %} · {{ content.recipient_names|join(' & ') }}{% endif %}</title>
+  <link rel="stylesheet" href="assets/shared/css/base.css">
+  <link rel="stylesheet" href="assets/template/theme.css">
+  <link rel="stylesheet" href="assets/shared/css/crazy.css">
+  <link rel="stylesheet" href="assets/shared/css/love.css">
+  <link rel="stylesheet" href="assets/shared/css/extras.css">
+  {% if content.wow_effects %}<link rel="stylesheet" href="assets/shared/css/motion.css">{% endif %}
+  <link rel="stylesheet" href="assets/shared/css/readable.css">
+  {% if content.site_nav and content.edit_mode_button %}<link rel="stylesheet" href="assets/shared/css/edit.css">{% endif %}
+  <style>
+    {% if content.theme.palette == 'pastel' %}:root{--accent:#e9788b;--accent-2:#8d7bda;}
+    {% elif content.theme.palette == 'jewel' %}:root{--accent:#b68bff;--accent-2:#21c7a8;}
+    {% elif content.theme.palette == 'earthy' %}:root{--accent:#ad654b;--accent-2:#5f7461;}
+    {% elif content.theme.palette == 'monochrome' %}:root{--accent:#343434;--accent-2:#777;}
+    {% endif %}
+    {% if template.scheme == 'dark' %}{# these templates are designed dark; leave their own palette alone #}
+    {% elif content.theme.appearance == 'dark' %}:root{--bg:#171519;--surface:#242126;--text:#fff8f2;--muted:#c5bbc1;--line:#ffffff26;color-scheme:dark;}
+    {% elif content.theme.appearance == 'light' %}:root{--bg:#fffaf6;--surface:#fff;--text:#291f25;--muted:#756b70;--line:#291f2524;color-scheme:light;}
+    {% endif %}
+    {% if content.theme.accent_color %}:root{--accent:{{ content.theme.accent_color }};}{% endif %}
+  </style>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body class="template-{{ template.id }} layout-{{ template.layout }}{% if content.wow_effects %} wow{% endif %}">
+  <a class="skip-link" href="#main">Skip to message</a>
+  {% if content.intro_splash %}
+  <div class="splash" data-splash role="dialog" aria-label="Welcome">
+    <div class="splash__bits" aria-hidden="true">{% for _ in range(8) %}<span style="--i:{{ loop.index0 }}">{{ '♥' if content.love_mode else '✦' }}</span>{% endfor %}</div>
+    <div class="splash__inner"><div class="splash__heart" aria-hidden="true">{{ '♥' if content.love_mode else '✦' }}</div><p>{{ 'Something made with love for' if content.love_mode else 'Something special for' }}</p><p class="splash__title">{{ content.recipient_names|join(' & ') or content.title }}</p>{% if content.sender_name %}<p>from {{ content.sender_name }}</p>{% endif %}<button type="button" class="button" data-splash-open>{{ 'Tap to open ♥' if content.love_mode else 'Tap to begin' }}</button></div>
+  </div>
+  {% endif %}
+  {% if content.site_nav %}
+  <header class="site-nav" data-site-nav>
+    <a class="site-nav__brand" href="#main"><i aria-hidden="true">{{ '♥' if content.love_mode else '✦' }}</i><span>{{ content.recipient_names|join(' & ') or content.title }}</span></a>
+    <ul class="site-nav__links" data-nav-links></ul>
+    <div class="site-nav__tools">
+      {% if content.edit_mode_button %}<button type="button" class="pill-btn" data-edit-toggle aria-pressed="false" hidden><span aria-hidden="true">✎</span><span class="pill-text">Edit mode</span></button>{% endif %}
+      {% if content.share_enabled %}<button type="button" class="icon-btn" data-share aria-label="Share this page">⤴</button>{% endif %}
+      <button type="button" class="icon-btn" data-theme-toggle aria-label="Toggle light and dark mode">☾</button>
+      <button type="button" class="icon-btn site-nav__menu" data-nav-menu aria-label="Menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+  {% endif %}
+  <div class="ambient" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  {% if content.wow_effects %}
+  <div class="scroll-progress" aria-hidden="true"><i data-scroll-progress></i></div>
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true" data-cursor-glow></div>
+  <div class="float-gifs" aria-hidden="true">{% for gif in (content.gif_pack or [])[:6] %}<img src="{{ gif }}" alt="" loading="lazy" decoding="async" style="--i:{{ loop.index0 }}">{% endfor %}</div>
+  {% endif %}
+  {% if content.media.background_music and content.music_enabled %}
+  <aside class="music-player" data-music-player>
+    <button type="button" class="music-toggle" data-music-toggle aria-label="Play background music" aria-pressed="false"><span data-music-icon>♪</span></button>
+    <label class="volume-control"><span>Volume</span><input type="range" min="0" max="1" value="0.55" step="0.05" data-volume></label>
+    <audio loop preload="none" src="{{ content.media.background_music }}" data-background-music></audio>
+  </aside>
+  {% endif %}
+  <main id="main">
+    {% if content.wow_effects %}{{ ui.marquee(content) }}{% endif %}
+    {% block content %}{% endblock %}
+    {% if content.wow_effects %}{{ ui.gif_rail(content) }}{% endif %}
+  </main>
+  <footer class="site-footer"><p>Made with <span class="heart" aria-hidden="true">♥</span>{% if content.sender_name %} by <strong>{{ content.sender_name }}</strong>{% endif %}{% if content.recipient_names %} for <strong>{{ content.recipient_names|join(' & ') }}</strong>{% endif %}</p><div class="site-footer__links"><a href="#main">Back to the top</a>{% if content.share_enabled %}<a href="#" data-share-footer>Share this wish</a>{% endif %}</div></footer>
+  <button type="button" class="to-top" data-to-top aria-label="Back to top">↑</button>
+  {% if content.love_particles != 'none' %}<canvas class="particles" data-particles="{{ content.particles }}" aria-hidden="true"></canvas>{% endif %}
+  <dialog class="lightbox" data-lightbox aria-label="Image preview"><button type="button" class="lightbox__close" data-lightbox-close aria-label="Close image preview">×</button><img data-lightbox-image alt=""><video data-lightbox-video controls playsinline hidden></video><p class="lightbox__caption" data-lightbox-caption></p></dialog>
+  <div class="confetti-layer" data-confetti aria-hidden="true"></div>
+  <script id="wishcraft-data" type="application/json">{{ {"event_datetime": content.event_datetime, "timezone": content.timezone, "animation": content.theme.animation_intensity, "project": content.project_name, "slug": content.project_slug, "collage_layout": content.collage_layout}|tojson }}</script>
+  <script src="assets/shared/js/site.js" defer></script>
+  <script src="assets/shared/js/extras.js" defer></script>
+  {% if content.wow_effects %}<script src="assets/shared/js/motion.js" defer></script>{% endif %}
+  {% if content.site_nav and content.edit_mode_button %}<script src="assets/shared/js/edit.js" defer></script>{% endif %}
+  {% if content.wow_effects %}<script src="assets/shared/js/crazy.js" defer></script>{% endif %}
+  <script src="assets/shared/js/love.js" defer></script>
+</body>
+</html>
+

@@ -1,0 +1,7 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="gratitude-hero"><div class="gratitude-copy"><p class="eyebrow">For {{ content.recipient_names|join(' & ') or 'you' }}</p><h1>{{ content.title }}</h1><p class="lead">{{ content.message }}</p><button class="text-button" type="button" data-open-experience>Read why <span aria-hidden="true">↓</span></button></div>{% if content.media.hero %}<figure><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('A meaningful shared moment') }}" style="object-position:{{ content.media.hero_focal_position }}"></figure>{% endif %}</section>
+<section class="section quiet-intro" id="story-start"><span class="rule"></span><h2>{{ content.subtitle }}</h2></section>
+{{ ui.memory_cards(content, 'reasons') }}{{ ui.letter(content) }}{{ ui.gallery(content) }}{{ ui.closing(content) }}
+{% endblock %}
+

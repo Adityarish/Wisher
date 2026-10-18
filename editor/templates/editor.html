@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WishCraft Studio</title>
+  <meta name="description" content="Create a personal celebration website from your own words and media.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='editor.css') }}">
+</head>
+<body>
+  <header class="studio-header">
+    <a class="brand" href="/"><span class="brand-mark">W</span><span>WishCraft <small>Studio</small></span></a>
+    <div class="project-tools">
+      <label>Project <select id="project-select">{% for project in projects %}<option value="{{ project }}">{{ project }}</option>{% endfor %}</select></label>
+      <button class="button button--quiet" id="new-project" type="button">New project</button>
+      <button class="button button--quiet help-button" id="open-help" type="button" aria-haspopup="dialog"><span class="help-q" aria-hidden="true">?</span><span class="help-text">Help</span></button>
+      <span class="save-state" id="save-state" role="status">Ready</span>
+    </div>
+  </header>
+
+  <main class="studio-shell">
+    <aside class="step-rail" aria-label="Editor steps">
+      <div class="progress-track"><span id="progress-bar"></span></div>
+      <ol id="step-list">
+        <li><button type="button" data-step-target="0"><span>01</span>Occasion</button></li>
+        <li><button type="button" data-step-target="1"><span>02</span>Template</button></li>
+        <li><button type="button" data-step-target="2"><span>03</span>People</button></li>
+        <li><button type="button" data-step-target="3"><span>04</span>Media</button></li>
+        <li><button type="button" data-step-target="4"><span>05</span>Messages</button></li>
+        <li><button type="button" data-step-target="5"><span>06</span>Style</button></li>
+        <li><button type="button" data-step-target="6"><span>07</span>Preview</button></li>
+        <li><button type="button" data-step-target="7"><span>08</span>Generate</button></li>
+      </ol>
+    </aside>
+
+    <form id="editor-form" class="editor-panel" novalidate>
+      <section class="editor-step" data-step="0">
+        <p class="kicker">Step 1 of 8</p><h1>What are we celebrating?</h1><p class="intro">The occasion guides which fields we show. You can pair any occasion with any visual template.</p>
+        <div class="occasion-grid" role="radiogroup">
+          {% for value, icon, label in [('birthday','✦','Birthday'),('wedding_invitation','❦','Wedding invite'),('wedding_wishes','♡','Wedding wishes'),('anniversary','∞','Anniversary'),('romantic','♥','Romantic'),('friendship','☺','Friendship / family'),('congratulations','★','Congratulations'),('thank_you','◡','Thank you'),('festival','✺','Festival'),('custom','＋','Custom')] %}
+          <label class="occasion-card"><input type="radio" name="occasion" value="{{ value }}"><span class="occasion-icon">{{ icon }}</span><strong>{{ label }}</strong></label>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section class="editor-step" data-step="1" hidden>
+        <p class="kicker">Step 2 of 8</p><h1>Choose the mood.</h1><p class="intro">Each template has its own composition and signature interaction. Your content stays reusable.</p>
+        <div class="template-grid">
+          {% for template in templates %}<label class="template-card" style="--swatch:{{ template.default_colors[1] }}"><input type="radio" name="template_id" value="{{ template.id }}"><span class="template-number">{{ '%02d'|format(template.id) }}</span><span class="template-preview"><i></i><i></i><i></i></span><strong>{{ template.name }}</strong><small>{{ template.description }}</small><span class="template-tags">{{ template.interactions[:2]|join(' · ') }}</span></label>{% endfor %}
+        </div>
+      </section>
+
+      <section class="editor-step" data-step="2" hidden>
+        <p class="kicker">Step 3 of 8</p><h1>Make it unmistakably theirs.</h1>
+        <div class="form-grid">
+          <label class="field field--wide"><span>Recipient names <small>separate with commas</small></span><input name="recipient_names" placeholder="Aarav, Meera" autocomplete="off"></label>
+          <label class="field"><span>From</span><input name="sender_name" placeholder="Your name"></label>
+          <label class="field"><span>Relationship</span><input name="relationship" placeholder="Best friend, sister, partner…"></label>
+          <label class="field field--wide"><span>Main title</span><input name="title" required maxlength="180" placeholder="A little surprise for you"></label>
+          <label class="field field--wide"><span>Subtitle</span><input name="subtitle" maxlength="240" placeholder="Made with your favorite memories"></label>
+          <label class="field"><span>Age or milestone</span><input name="age_or_milestone" placeholder="30, 10 years, Graduated"></label>
+          <label class="field"><span>Language</span><input name="language" value="en" placeholder="en, hi, fr"></label>
+          <label class="field"><span>Date and time</span><input name="event_datetime" type="datetime-local"></label>
+          <label class="field"><span>Timezone</span><input name="timezone" value="Asia/Kolkata"></label>
+        </div>
+        <fieldset class="conditional-panel" data-occasion-show="wedding_invitation,wedding_wishes">
+          <legend>Wedding details</legend><div class="form-grid"><label class="field field--wide"><span>Couple names <small>separate with commas</small></span><input name="couple_names" placeholder="Meera, Aarav"></label><label class="field"><span>Event name</span><input name="event_name" placeholder="Wedding ceremony"></label><label class="field"><span>Venue</span><input name="event_venue" placeholder="The Garden House"></label><label class="field field--wide"><span>Event description</span><input name="event_description" placeholder="Join us for the ceremony and dinner"></label><label class="field"><span>Address</span><input name="event_address"></label><label class="field"><span>Map URL</span><input name="map_url" type="url" placeholder="https://maps.google.com/…"></label><label class="field"><span>External RSVP URL</span><input name="rsvp_url" type="url" placeholder="https://…"></label><label class="field field--wide"><span>Additional schedule <small>one per line: Name | Date and time | Description | Venue | Address</small></span><textarea name="additional_events" rows="4" placeholder="Reception | 2027-02-15 19:00 | Dinner and dancing | The Garden House | Jaipur"></textarea></label></div>
+        </fieldset>
+      </section>
+
+      <section class="editor-step" data-step="3" hidden>
+        <p class="kicker">Step 4 of 8</p><h1>Add the moments that matter.</h1><p class="intro">Drop in media, then drag gallery cards into the order you want. Originals are never modified.</p>
+        <p class="help-inline">Not sure how to name things? <button type="button" class="link-button" data-open-help>Open the upload guide</button> or use Smart upload to sort a whole folder automatically.</p>
+        <div class="upload-grid">
+          {% for kind, title, accept in [('photos','Photos','image/*'),('videos','Videos','video/*'),('audios','Music & voice','audio/*'),('gifs','GIFs','image/gif,image/webp'),('stickers','Stickers','image/*')] %}
+          <label class="drop-zone" data-upload-kind="{{ kind }}"><input type="file" multiple accept="{{ accept }}"><span class="drop-icon">＋</span><strong>{{ title }}</strong><small>Choose files or drop them here</small></label>
+          {% endfor %}
+        </div>
+        <div class="media-library" id="media-library"><p class="empty-state">Uploaded media will appear here.</p></div>
+        <div class="form-grid compact-grid">
+          <label class="field"><span>Hero image path</span><input name="hero" placeholder="photos/01.jpg"></label><label class="field"><span>Hero focal position</span><input name="hero_focal_position" placeholder="50% 50%"></label>
+          <label class="field"><span>Background music path</span><input name="background_music" placeholder="audios/01.mp3"></label><label class="field"><span>Social preview image</span><input name="social_preview" placeholder="photos/social-preview.jpg"></label>
+          <label class="field"><span>Welcome GIF role</span><input name="gif_welcome" placeholder="gifs/01.gif"></label><label class="field"><span>Closing sticker role</span><input name="sticker_closing" placeholder="stickers/01.png"></label>
+          <label class="field"><span>Gallery captions <small>one per photo</small></span><textarea name="gallery_captions" rows="4"></textarea></label><label class="field"><span>Gallery alt text <small>one per photo</small></span><textarea name="gallery_alts" rows="4"></textarea></label>
+          <label class="field"><span>Video captions <small>one per video</small></span><textarea name="video_captions" rows="3"></textarea></label><label class="field"><span>Voice-note captions <small>one per audio file after background music</small></span><textarea name="voice_captions" rows="3"></textarea></label>
+        </div>
+      </section>
+
+      <section class="editor-step" data-step="4" hidden>
+        <p class="kicker">Step 5 of 8</p><h1>Write what only you can say.</h1>
+        <div class="form-stack"><label class="field"><span>Main message</span><textarea name="message" rows="5" required placeholder="Your personal message goes here."></textarea></label><label class="field"><span>Letter</span><textarea name="letter" rows="8" placeholder="A longer note they can unfold and keep…"></textarea></label><label class="field"><span>Timeline <small>one per line: Date | Title | Description</small></span><textarea name="timeline" rows="5" placeholder="2022 | The first hello | Where our story began"></textarea></label><label class="field"><span>Memory cards <small>one per line</small></span><textarea name="memory_cards" rows="5" placeholder="That rainy walk home&#10;The joke no one else understands"></textarea></label><label class="field"><span>Reasons I appreciate you <small>one per line</small></span><textarea name="appreciation_cards" rows="5"></textarea></label><label class="field"><span>Quotes <small>one per line; optionally use Quote | Author</small></span><textarea name="quotes" rows="4"></textarea></label><label class="field"><span>Reveal message</span><textarea name="reveal_message" rows="3"></textarea></label><label class="field"><span>Closing message</span><textarea name="closing_message" rows="3"></textarea></label><div class="form-grid"><label class="field"><span>Open button label</span><input name="button_open" placeholder="Open your surprise"></label><label class="field"><span>Reveal button label</span><input name="button_reveal" placeholder="Reveal the surprise"></label><label class="field"><span>Letter button label</span><input name="button_letter" placeholder="Read the letter"></label></div></div>
+      </section>
+
+      <section class="editor-step" data-step="5" hidden>
+        <p class="kicker">Step 6 of 8</p><h1>Set the finishing tone.</h1>
+        <div class="form-grid"><label class="field"><span>Palette</span><select name="palette"><option value="default">Template colours</option><option>pastel</option><option>jewel</option><option>earthy</option><option>monochrome</option></select></label><label class="field"><span>Accent color</span><input name="accent_color" type="color" value="#c95c77"><small class="field-check"><input name="accent_custom" type="checkbox"> Use my accent instead of the template's own colours</small></label><label class="field"><span>Font pairing</span><select name="font_pairing"><option value="expressive">Expressive</option><option value="classic">Classic</option><option value="modern">Modern</option></select></label><label class="field"><span>Appearance</span><select name="appearance"><option value="auto">Template default</option><option value="light">Light</option><option value="dark">Dark</option></select></label><label class="field"><span>Animation</span><select name="animation_intensity"><option value="subtle">Subtle</option><option value="playful">Playful</option><option value="off">Off</option></select></label><label class="field"><span>Decoration density</span><select name="decoration_density"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></label><label class="field"><span>Opening interaction</span><select name="opening_interaction"><option value="default">Template default</option><option value="envelope">Envelope</option><option value="gift">Gift</option><option value="burst">Celebration burst</option><option value="simple">Simple</option></select></label></div>
+        <div class="toggle-grid"><label class="toggle"><input type="checkbox" name="music_enabled"><span></span>Enable music controls</label><label class="toggle"><input type="checkbox" name="countdown_enabled"><span></span>Show countdown when a date is set</label><label class="toggle"><input type="checkbox" name="branding_credit"><span></span>Show “Made with WishCraft”</label></div>
+        <fieldset><legend>Sections and order</legend><div class="section-picker" id="section-picker">{% for section in ['hero','countdown','timeline','events','gallery','videos','memories','reasons','letter','quotes','surprise','closing'] %}<label draggable="true"><span class="drag-handle">⠿</span><input type="checkbox" value="{{ section }}">{{ section|replace('_',' ')|title }}</label>{% endfor %}</div></fieldset>
+      </section>
+
+      <section class="editor-step" data-step="6" hidden>
+        <p class="kicker">Step 7 of 8</p><h1>See it before you send it.</h1><div class="validation-summary" id="validation-summary"></div><div class="preview-frame-wrap"><div class="preview-toolbar"><span></span><span></span><span></span><strong>Local preview</strong><button type="button" id="refresh-preview">Refresh</button></div><iframe id="preview-frame" title="Generated website preview"></iframe></div>
+      </section>
+
+      <section class="editor-step final-step" data-step="7" hidden>
+        <p class="kicker">Step 8 of 8</p><h1>Your wish is ready to become a website.</h1><p class="intro">Generate a standalone folder with all assets included. It can be opened directly or uploaded to any static host.</p><div class="export-card"><span class="export-icon">✦</span><div><h2 id="export-title">Ready to generate</h2><p id="export-path">Your export will be saved inside <code>dist/</code>.</p></div><button class="button" id="generate-final" type="button">Generate website</button></div><a class="open-preview" id="open-preview" href="#" target="_blank" hidden>Open finished website ↗</a>
+      </section>
+
+      <footer class="form-actions"><button class="button button--quiet" id="previous-step" type="button">Back</button><button class="button button--quiet" id="save-project" type="button">Save project</button><button class="button" id="next-step" type="button">Continue</button></footer>
+    </form>
+  </main>
+  <dialog class="help-dialog" id="help-dialog" aria-labelledby="help-title">
+    <header class="help-head"><div><p class="kicker">Upload guide</p><h2 id="help-title">Name your files once, WishCraft does the rest</h2></div><button type="button" class="help-close" id="help-close" aria-label="Close help">×</button></header>
+    <div class="help-body">
+      <section>
+        <h3>1 · The naming convention</h3>
+        <p class="help-note">Any file works, but these names are used automatically. Numbers set the order (2 comes before 10).</p>
+        <table class="convention"><thead><tr><th>File name</th><th>Goes to</th><th>What happens</th></tr></thead><tbody>
+        {% for pattern, kind, meaning in convention %}<tr><td><code>{{ pattern }}</code></td><td><span class="chip">{{ kind }}</span></td><td>{{ meaning }}</td></tr>{% endfor %}
+        </tbody></table>
+        <pre class="tree" aria-label="Example folder">my_wish/
+├─ hero.jpg                 → opening photo
+├─ 01_our-first-trip.jpg    → caption “Our first trip”
+├─ 02_birthday-dinner.png
+├─ 03_hello.mp4             → video tile
+├─ song.mp3                 → background music
+├─ voice_mum.mp3            → voice message
+├─ sticker_cake.png         → sticker
+├─ letter.txt   message.txt → page text
+└─ reasons.txt              → one reason per line (100 reasons)</pre>
+      </section>
+      <section>
+        <h3>2 · Smart upload</h3>
+        <p class="help-note">Drop a whole folder or a pile of files. Each is sorted, renamed and added to project <strong id="help-project">default</strong>. Nothing is overwritten and duplicates are skipped.</p>
+        <div class="smart-drop" id="smart-drop" tabindex="0">
+          <strong>Drop files or a folder here</strong>
+          <span>or</span>
+          <div class="smart-buttons"><label class="button button--quiet">Choose files<input type="file" id="smart-files" multiple hidden></label><label class="button button--quiet">Choose a folder<input type="file" id="smart-folder" webkitdirectory multiple hidden></label></div>
+        </div>
+        <div class="smart-preview" id="smart-preview" hidden>
+          <h4>Here is what will happen</h4>
+          <ul id="smart-list"></ul>
+          <div class="smart-actions"><button type="button" class="button button--quiet" id="smart-cancel">Cancel</button><button type="button" class="button" id="smart-confirm">Add to my website</button></div>
+        </div>
+      </section>
+      <section>
+        <h3>3 · Prefer the command line?</h3>
+        <p class="help-note">Drop files in <code>user_data/inbox/</code> and run <code>python user_data/helper.py --project <span data-help-project>default</span></code>. It uses exactly the same rules. Add <code>--dry-run</code> to preview.</p>
+      </section>
+      <section>
+        <h3>Good to know</h3>
+        <ul class="help-tips"><li>Photos up to ~15 MB and videos up to ~80 MB load comfortably.</li><li>Folder uploads from the browser are limited to 120 MB at a time. For larger sets use the command line.</li><li>Captions come from file names. Add Hindi or emoji captions in the Media step.</li><li><code>reasons.txt</code> lets you write your own “100 reasons”. Missing ones are filled with built-in lines.</li></ul>
+      </section>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>window.WISHCRAFT_BOOT={{ {"templates": templates, "projects": projects}|tojson }};</script>
+  <script src="{{ url_for('static', filename='editor.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='help.js') }}" defer></script>
+</body>
+</html>
+

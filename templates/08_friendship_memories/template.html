@@ -1,0 +1,6 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="hero friendship-hero"><span class="doodle doodle--a" aria-hidden="true">★</span><span class="doodle doodle--b" aria-hidden="true">☺</span><div class="hero__content"><p class="sticker-label">THE REAL ONES</p><h1>{{ content.title }}</h1><p class="hero__recipient">{{ content.recipient_names|join(' + ') or 'Us' }}</p><p class="lead">{{ content.message }}</p><button class="button" type="button" data-open-experience>Jump into the memories</button></div>{% if content.media.hero %}<figure class="friend-photo"><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('Friends together') }}" style="object-position:{{ content.media.hero_focal_position }}"></figure>{% endif %}</section>
+<div id="story-start"></div>{{ ui.memory_cards(content) }}{{ ui.gallery(content) }}{{ ui.videos(content) }}{{ ui.quotes(content) }}{{ ui.surprise(content, 'burst') }}{{ ui.closing(content) }}
+{% endblock %}
+

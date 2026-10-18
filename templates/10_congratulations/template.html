@@ -1,0 +1,7 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="achievement-hero"><div class="rays" aria-hidden="true"></div><div class="achievement-copy"><p class="eyebrow">Achievement unlocked</p><p class="big-number">{{ content.age_or_milestone or '01' }}</p><h1>{{ content.title }}</h1><p class="hero__recipient">{{ content.recipient_names|join(' & ') }}</p><button class="button" type="button" data-open-experience data-celebrate>Raise the curtain</button></div>{% if content.media.hero %}<figure class="spotlight-photo"><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('The person being celebrated') }}" style="object-position:{{ content.media.hero_focal_position }}"></figure>{% endif %}</section>
+<section class="section achievement-statement" id="story-start"><p>THIS MOMENT IS YOURS</p><h2>{{ content.message }}</h2></section>
+{{ ui.gallery(content) }}{{ ui.quotes(content) }}{{ ui.memory_cards(content) }}{{ ui.surprise(content, 'confetti') }}{{ ui.closing(content) }}
+{% endblock %}
+

@@ -1,0 +1,118 @@
+/* WishCraft "wow" layer: animated extras shared by every template. Additive; disabled by wow_effects:false. */
+:root{--glow:var(--accent);--wow-a:var(--accent);--wow-b:var(--accent-2)}
+
+/* Scroll progress */
+.scroll-progress{position:fixed;z-index:120;top:0;left:0;right:0;height:4px;pointer-events:none}
+.scroll-progress i{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(var(--p,0));background:linear-gradient(90deg,var(--wow-a),var(--wow-b),#ffd166,var(--wow-a));background-size:300% 100%;animation:shimmer 4s linear infinite;box-shadow:0 0 14px var(--wow-a)}
+
+/* Aurora backdrop */
+.aurora{position:fixed;inset:-20vmax;z-index:-2;pointer-events:none;opacity:.5;filter:blur(60px) saturate(1.4);
+  background:conic-gradient(from var(--spin,0deg) at 50% 50%,var(--wow-a),transparent 18%,var(--wow-b) 36%,transparent 54%,#ffd166 72%,transparent 88%,var(--wow-a));
+  animation:spin 38s linear infinite;mix-blend-mode:soft-light}
+@property --spin{syntax:"<angle>";inherits:false;initial-value:0deg}
+.wow[data-appearance="dark"] .aurora,.wow.template-2 .aurora{opacity:.35;mix-blend-mode:screen}
+
+/* Cursor glow (fine pointers only) */
+.cursor-glow{position:fixed;z-index:90;top:0;left:0;width:340px;height:340px;margin:-170px 0 0 -170px;border-radius:50%;pointer-events:none;opacity:0;
+  background:radial-gradient(circle,color-mix(in srgb,var(--wow-a) 35%,transparent),transparent 65%);transition:opacity .4s;will-change:transform}
+.cursor-glow.is-on{opacity:.45}
+@media(pointer:coarse){.cursor-glow{display:none}}
+
+/* Ticker */
+.marquee{overflow:hidden;white-space:nowrap;padding:.7rem 0;border-block:1px solid var(--line);background:color-mix(in srgb,var(--surface) 70%,transparent);backdrop-filter:blur(8px);
+  font-family:var(--serif);font-size:clamp(1rem,2.2vw,1.5rem);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+.marquee__track{display:inline-flex;animation:marquee 32s linear infinite}
+.marquee__track span{padding-right:2rem}
+.marquee:hover .marquee__track{animation-play-state:paused}
+
+/* Split headline */
+.wow h1 .word{display:inline-block;white-space:nowrap}
+.wow h1 .char{display:inline-block;opacity:0;transform:translateY(60%) rotate(8deg) scale(.6);animation:char-in .8s cubic-bezier(.2,1.4,.4,1) forwards;animation-delay:calc(var(--c)*45ms + .2s)}
+.wow h1.is-split .char{animation:none;opacity:1;transform:none;transition:transform .28s cubic-bezier(.2,1.5,.4,1),color .28s}
+.wow h1.is-split .char:hover{transform:translateY(-3%) scale(1.14);color:var(--accent)}
+
+/* Reveal with more attitude */
+.wow.js .reveal-on-scroll{transform:none;translate:var(--tx,0) var(--ty,46px);scale:var(--sc,.94);rotate:var(--rot,0deg);filter:blur(6px);transition:opacity .85s ease,translate 1s cubic-bezier(.2,1,.3,1),scale 1s cubic-bezier(.2,1,.3,1),rotate 1s cubic-bezier(.2,1,.3,1),filter .8s,transform .25s ease-out,box-shadow .3s}
+.wow.js .reveal-on-scroll.is-visible{translate:0 0;scale:1;rotate:0deg;filter:none}
+
+
+/* 3D tilt + glare */
+[data-tilt]{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);transition:transform .25s ease-out,box-shadow .3s;will-change:transform}
+[data-tilt].is-tilting{transition:transform .06s linear}
+.wow .story-card,.wow .event-card,.wow .timeline-item,.wow .voice-card{transition:transform .35s cubic-bezier(.2,1.4,.4,1),box-shadow .35s}
+.wow .story-card:hover,.wow .event-card:hover,.wow .timeline-item:hover{transform:translateY(-8px) rotate(-.6deg) scale(1.02);box-shadow:0 30px 80px color-mix(in srgb,var(--wow-a) 35%,transparent)}
+.wow .story-number{background:linear-gradient(120deg,var(--wow-a),var(--wow-b));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+/* Magnetic / glowing buttons */
+.wow .button{position:relative;overflow:hidden;isolation:isolate}
+.wow .button::before{content:"";position:absolute;inset:-2px;z-index:-1;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-120%);transition:transform .7s}
+.wow .button:hover::before{transform:translateX(120%)}
+.wow .button:not(.button--quiet){background:linear-gradient(120deg,var(--wow-a),var(--wow-b));color:#fff;animation:pulse 2.6s ease-in-out infinite}
+.magnetic{transition:transform .2s ease-out}
+
+/* Floating GIF stickers */
+.float-gifs{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.float-gifs img{position:absolute;width:clamp(70px,9vw,130px);height:auto;border-radius:18px;opacity:.9;filter:drop-shadow(0 10px 18px rgba(0,0,0,.25));
+  left:calc(4% + var(--i)*16%);top:calc(12% + (var(--i)*37%) - (var(--i)/3 | 0)*100%);animation:bob calc(7s + var(--i)*1.3s) ease-in-out infinite alternate;animation-delay:calc(var(--i)*-1.7s)}
+.float-gifs img:nth-child(even){left:auto;right:calc(3% + var(--i)*6%)}
+.float-gifs img:nth-child(n+4){display:none}
+@media(min-width:1100px){.float-gifs img:nth-child(n+4){display:block}}
+@media(max-width:720px){.float-gifs img{width:64px;opacity:.75}.float-gifs img:nth-child(n+3){display:none}}
+
+/* ===== Collage ===== */
+.collage{--cols:2;--row:clamp(110px,28vw,170px);display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));grid-auto-rows:var(--row);grid-auto-flow:dense;gap:clamp(.5rem,1.4vw,1rem)}
+@media(min-width:560px){.collage{--cols:3;--row:clamp(130px,19vw,190px)}}
+@media(min-width:900px){.collage{--cols:4;--row:clamp(150px,15vw,200px)}}
+@media(min-width:1280px){.collage{--cols:6;--row:190px}}
+/* rhythm of sizes: big hero tile, tall, wide, small */
+.collage .tile:nth-child(7n+1){grid-column:span 2;grid-row:span 2}
+.collage .tile:nth-child(7n+3){grid-row:span 2}
+.collage .tile:nth-child(7n+5){grid-column:span 2}
+.collage .tile:nth-child(11n+7){grid-column:span 2;grid-row:span 2}
+.collage .tile--gif{grid-row:span 1;grid-column:span 1}
+.collage .tile[style*="--c:"]{grid-column:span min(var(--c),var(--cols))}
+.collage .tile[style*="--r:"]{grid-row:span var(--r)}
+.tile{position:relative;margin:0;overflow:hidden;border-radius:clamp(14px,2vw,26px);background:var(--surface);cursor:zoom-in;isolation:isolate;
+  box-shadow:0 14px 40px color-mix(in srgb,var(--text) 18%,transparent);outline-offset:3px}
+.tile::before{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit;padding:3px;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:conic-gradient(from var(--spin,0deg),var(--wow-a),var(--wow-b),#ffd166,var(--wow-a));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 4s linear infinite}
+.tile:hover::before,.tile:focus-visible::before{opacity:1}
+.tile img,.tile video{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .5s}
+.tile:hover img,.tile:hover video{transform:scale(1.12) rotate(.8deg);filter:saturate(1.25) contrast(1.05)}
+.tile figcaption{position:absolute;z-index:2;inset:auto 0 0;padding:2.2rem .9rem .75rem;color:#fff;font-size:.9rem;font-weight:700;line-height:1.3;
+  background:linear-gradient(transparent,rgba(0,0,0,.72));transform:translateY(60%);opacity:0;transition:transform .4s,opacity .4s}
+.tile:hover figcaption,.tile:focus-visible figcaption{transform:none;opacity:1}
+@media(hover:none){.tile figcaption{transform:none;opacity:1}}
+.tile__badge{position:absolute;z-index:2;top:.7rem;right:.7rem;width:2.4rem;height:2.4rem;display:grid;place-items:center;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font-size:.9rem;backdrop-filter:blur(6px);animation:pulse 2s ease-in-out infinite}
+.tile--gif{cursor:default;display:grid;place-items:center;background:linear-gradient(135deg,color-mix(in srgb,var(--wow-a) 25%,var(--surface)),color-mix(in srgb,var(--wow-b) 25%,var(--surface)))}
+.tile--gif img{object-fit:contain;padding:.6rem}
+.tile--gif:hover img{transform:scale(1.15) rotate(-4deg)}
+.collage .tile:nth-child(3n){--d:3}.collage .tile:nth-child(3n+1){--d:6}.collage .tile:nth-child(5n){--d:1.5}
+
+/* Lightbox with video + caption */
+.lightbox video{width:100%;max-height:calc(100vh - 5rem);background:#000}
+.lightbox__caption{margin:0;padding:.8rem 1.1rem;color:#fff;font-weight:700;text-align:center}.lightbox__caption:empty{display:none}
+.lightbox[open]{animation:pop .45s cubic-bezier(.2,1.4,.4,1)}
+
+/* Click sparkles */
+.spark{position:fixed;z-index:130;pointer-events:none;font-size:1.1rem;animation:spark .9s ease-out forwards;transform:translate(-50%,-50%)}
+
+@keyframes shimmer{to{background-position:-300% 0}}
+@keyframes spin{to{--spin:360deg;transform:none}}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@keyframes char-in{to{opacity:1;transform:none}}
+@keyframes wobble{30%{transform:translateY(-12px) rotate(-8deg) scale(1.2)}60%{transform:translateY(2px) rotate(5deg)}}
+@keyframes pulse{50%{box-shadow:0 0 0 10px color-mix(in srgb,var(--wow-a) 0%,transparent),0 12px 40px color-mix(in srgb,var(--wow-a) 55%,transparent);transform:scale(1.04)}}
+@keyframes bob{from{transform:translate3d(0,-14px,0) rotate(-6deg)}to{transform:translate3d(20px,30px,0) rotate(7deg)}}
+@keyframes tile-float{from{translate:0 -3px}to{translate:0 4px}}
+@keyframes pop{from{transform:scale(.7);opacity:0}}
+@keyframes spark{to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.2) rotate(240deg);opacity:0}}
+
+@media(prefers-reduced-motion:reduce){
+  .aurora,.cursor-glow,.float-gifs,.tile::before{display:none}
+  .marquee__track,.wow .button:not(.button--quiet),.tile__badge{animation:none}
+  .wow h1 .char{opacity:1;transform:none;animation:none}
+  .wow.js .reveal-on-scroll{filter:none}
+  [data-tilt]{transform:none!important}
+}

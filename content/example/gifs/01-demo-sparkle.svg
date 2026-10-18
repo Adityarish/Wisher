@@ -1,0 +1,2 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Animated sparkle decoration"><path fill="#ffd166" d="M80 0c5 50 30 75 80 80-50 5-75 30-80 80-5-50-30-75-80-80C50 75 75 50 80 0Z"><animateTransform attributeName="transform" type="rotate" values="0 80 80;10 80 80;0 80 80" dur="2.4s" repeatCount="indefinite"/></path><circle cx="80" cy="80" r="17" fill="#fff"/></svg>
+

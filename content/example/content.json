@@ -1,0 +1,136 @@
+{
+  "age_or_milestone": "19",
+  "appreciation_cards": [
+    {
+      "title": "Memory 1",
+      "text": "You make space for what other people have to say."
+    },
+    {
+      "title": "Memory 2",
+      "text": "Your care is steady, generous, and real."
+    }
+  ],
+  "branding_credit": true,
+  "button_labels": {
+    "open": "Open your surprise",
+    "reveal": "Make a wish",
+    "letter": "Read the letter"
+  },
+  "closing_message": "Wishing you a beautiful year ahead.",
+  "countdown_enabled": true,
+  "couple_names": [],
+  "edit_mode_button": true,
+  "event_datetime": "2026-10-17T03:29:00.000Z",
+  "events": [],
+  "gallery": [
+    {
+      "src": "photos/02-memory.svg",
+      "caption": "The kind of day worth keeping",
+      "alt": "Abstract sunset landscape demo artwork"
+    },
+    {
+      "src": "photos/03-memory.svg",
+      "caption": "More good moments ahead",
+      "alt": "Abstract flower garden demo artwork"
+    }
+  ],
+  "gif_pack_size": 8,
+  "gif_rail": true,
+  "gif_roles": {
+    "welcome": "gifs/01-demo-sparkle.svg"
+  },
+  "gif_theme": "auto",
+  "intro_splash": true,
+  "language": "en",
+  "letter": "Dear You,\n\nThis is a demo letter, ready to be replaced with words that sound like you. Add the small details, the shared jokes, and the honest things that make this wish personal.\n\nHere is to more memories together.",
+  "love_letter_animation": true,
+  "love_particles": "auto",
+  "media": {
+    "background_music": null,
+    "hero": "photos/01-hero.svg",
+    "hero_focal_position": "50% 50%",
+    "social_preview": "photos/01-hero.svg"
+  },
+  "memory_cards": [
+    {
+      "title": "Memory 1",
+      "text": "For the jokes that arrive at exactly the right time."
+    },
+    {
+      "title": "Memory 2",
+      "text": "For making people feel welcome and understood."
+    },
+    {
+      "title": "Memory 3",
+      "text": "For every plan that became a story worth retelling."
+    }
+  ],
+  "message": "Today is a good excuse to celebrate the warmth, laughter, and light you bring into every room.",
+  "music_enabled": true,
+  "occasion": "birthday",
+  "opening_interaction": "gift",
+  "quotes": [
+    {
+      "text": "May the next chapter surprise you in the best possible ways.",
+      "author": "A wish from the heart"
+    }
+  ],
+  "reasons": [],
+  "reasons_count": 100,
+  "reasons_fill_defaults": true,
+  "recipient_names": [
+    "Alex Morgan"
+  ],
+  "relationship": "Partner",
+  "reveal_message": "You deserve a year full of bright beginnings and beautiful detours.",
+  "section_options": {},
+  "sections": [
+    "hero",
+    "countdown",
+    "timeline",
+    "events",
+    "gallery",
+    "videos",
+    "memories",
+    "reasons",
+    "letter",
+    "quotes",
+    "surprise",
+    "closing"
+  ],
+  "sender_name": "Sam Rivera",
+  "share_enabled": true,
+  "site_nav": true,
+  "sticker_roles": {
+    "closing": "stickers/01-demo-cake.svg",
+    "welcome": "stickers/01-demo-cake.svg"
+  },
+  "subtitle": "Made with your favorite memories",
+  "template_id": 1,
+  "theme": {
+    "palette": "default",
+    "accent_color": "",
+    "font_pairing": "expressive",
+    "appearance": "auto",
+    "animation_intensity": "playful",
+    "decoration_density": "medium"
+  },
+  "timeline": [
+    {
+      "date": "The beginning",
+      "title": "A favorite hello",
+      "description": "Replace this clearly labeled demo moment with your own story."
+    },
+    {
+      "date": "Right now",
+      "title": "A day to celebrate",
+      "description": "A reminder that the ordinary days matter too."
+    }
+  ],
+  "timezone": "Asia/Kolkata",
+  "title": "A little surprise for you",
+  "videos": [],
+  "voice_messages": [],
+  "wow_effects": true,
+  "collage_layout": {}
+}

@@ -1,0 +1,7 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="hero scrapbook-hero"><div class="paperclip" aria-hidden="true"></div><div class="hero__content"><p class="eyebrow">A page for {{ content.recipient_names|join(' & ') or 'you' }}</p><h1>{{ content.title }}</h1><p class="lead note">{{ content.subtitle }}</p><button class="button" type="button" data-open-experience>Turn the page</button></div>{% if content.media.hero %}<figure class="hero-polaroid"><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('A favorite birthday memory') }}" style="object-position:{{ content.media.hero_focal_position }}"><figcaption>one for the memory book ♡</figcaption></figure>{% endif %}</section>
+<section class="section scrapbook-note reveal-on-scroll" id="story-start"><span class="tape" aria-hidden="true"></span><p class="eyebrow">Written by hand, kept by heart</p><h2>{{ content.message }}</h2></section>
+{{ ui.gallery(content) }}{{ ui.memory_cards(content) }}{{ ui.quotes(content) }}{{ ui.letter(content) }}{{ ui.closing(content) }}
+{% endblock %}
+

@@ -1,0 +1,54 @@
+# ---- Python -------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ---- Editors and operating systems --------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# ---- Generated websites (rebuild with: python generate.py --overwrite) --
+dist/
+
+# ---- GIF library -----------------------------------------------------------
+# About 50 MB of third-party GIFs whose licences are not verified, so it stays
+# out of the repository. See "GIF pack" in README.md to add your own.
+WishCraft_GIF_Collection/
+
+# ---- Personal content ----------------------------------------------------
+# Your projects (names, photos, videos, voice notes) are private. Only the
+# demo project in content/example/ and content/README.md are published.
+content/*
+!content/README.md
+!content/example/
+!content/example/**
+content/example/**/.DS_Store
+
+# ---- Helper inbox: files you drop here are private -------------------------
+user_data/inbox/*
+!user_data/inbox/.gitkeep
+!user_data/inbox/.gitignore
+
+# ---- Old build notes (stale, not needed to use the project) -------------
+run.txt
+implementation.md
+
+# ---- Scratch and secrets -------------------------------------------------
+*.log
+.env
+.env.*
+*.local
+tmp/
+scratch/

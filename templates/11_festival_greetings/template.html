@@ -1,0 +1,7 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="festival-hero"><div class="light-string" aria-hidden="true">●　●　●　●　●　●　●</div><div class="mandala" aria-hidden="true">✺</div><div class="festival-card"><p class="eyebrow">A festive wish for</p><p class="hero__recipient">{{ content.recipient_names|join(' & ') or 'you and yours' }}</p><h1>{{ content.title }}</h1><p class="lead">{{ content.message }}</p><button class="button" type="button" data-open-experience>Light up the greeting</button></div></section>
+<section class="section festival-message" id="story-start">{% if content.media.hero %}<figure><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('A festive moment') }}" style="object-position:{{ content.media.hero_focal_position }}"></figure>{% endif %}<div><p class="eyebrow">From our home to yours</p><h2>{{ content.subtitle }}</h2></div></section>
+{{ ui.gallery(content) }}{{ ui.quotes(content) }}{{ ui.letter(content) }}{{ ui.surprise(content, 'lights') }}{{ ui.closing(content) }}
+{% endblock %}
+

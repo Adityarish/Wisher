@@ -1,0 +1,233 @@
+{% macro picture(src, alt='', caption='', class_name='') -%}
+  <figure class="media-card {{ class_name }}">
+    <button class="media-card__button" type="button" data-lightbox-src="{{ src }}" data-lightbox-alt="{{ alt or caption }}" aria-label="Open image{{ ': ' ~ (alt or caption) if (alt or caption) else '' }}">
+      <img src="{{ src }}" alt="{{ alt }}" loading="lazy" decoding="async">
+    </button>
+    {% if caption %}<figcaption>{{ caption }}</figcaption>{% endif %}
+  </figure>
+{%- endmacro %}
+
+{% macro section_heading(eyebrow, title) -%}
+  <header class="section-heading reveal-on-scroll">
+    <p class="eyebrow">{{ eyebrow }}</p>
+    <h2>{{ title }}</h2>
+  </header>
+{%- endmacro %}
+
+{% macro collage(items, gifs=[], layout={}) -%}
+  <div class="collage" data-collage>
+    {% for item in items %}
+      {% if item.kind == 'video' %}
+      {% set lay = layout.get(item.src) %}<figure class="tile tile--video reveal-on-scroll" data-key="{{ item.src }}"{% if lay %} style="--c:{{ lay.c }};--r:{{ lay.r }}"{% endif %} data-tilt data-collage-open data-kind="video" data-src="{{ item.src }}" data-caption="{{ item.caption|default('') }}" tabindex="0" role="button" aria-label="Play video{{ ': ' ~ item.caption if item.caption else '' }}">
+        <video muted loop playsinline preload="metadata" {% if item.poster %}poster="{{ item.poster }}"{% endif %} data-autoplay-visible><source src="{{ item.src }}"></video>
+        <span class="tile__badge" aria-hidden="true">▶</span>
+        {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
+      </figure>
+      {% else %}
+      {% set lay = layout.get(item.src) %}<figure class="tile tile--photo reveal-on-scroll" data-key="{{ item.src }}"{% if lay %} style="--c:{{ lay.c }};--r:{{ lay.r }}"{% endif %} data-tilt data-collage-open data-kind="image" data-src="{{ item.src }}" data-caption="{{ item.alt or item.caption|default('') }}" tabindex="0" role="button" aria-label="Open image{{ ': ' ~ (item.alt or item.caption) if (item.alt or item.caption) else '' }}">
+        <img src="{{ item.src }}" alt="{{ item.alt|default('') }}" loading="lazy" decoding="async">
+        {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
+      </figure>
+      {% endif %}
+    {% endfor %}
+    {% for gif in gifs %}
+      {% set lay = layout.get(gif) %}<figure class="tile tile--gif reveal-on-scroll" data-key="{{ gif }}"{% if lay %} style="--c:{{ lay.c }};--r:{{ lay.r }}"{% endif %} aria-hidden="true"><img src="{{ gif }}" alt="" loading="lazy" decoding="async"></figure>
+    {% endfor %}
+  </div>
+{%- endmacro %}
+
+{% macro gallery(content) -%}
+  {% set ns = namespace(items=[]) %}
+  {% for item in content.gallery %}{% set ns.items = ns.items + [{'kind': 'image', 'src': item.src, 'alt': item.alt|default(''), 'caption': item.caption|default('')}] %}{% endfor %}
+  {% for item in content.videos %}{% set ns.items = ns.items + [{'kind': 'video', 'src': item.src, 'poster': item.poster|default(''), 'caption': item.caption|default('')}] %}{% endfor %}
+  {% if ns.items %}
+  <section class="section gallery-section" id="gallery" data-section="gallery">
+    {{ section_heading('Moments worth keeping', 'A little collage of us') }}
+    {{ collage(ns.items, (content.gif_pack or [])[:(2 if ns.items|length < 5 else 4)], content.collage_layout or {}) }}
+  </section>
+  {% endif %}
+{%- endmacro %}
+
+{% macro timeline(content) -%}
+  {% if content.timeline %}
+  <section class="section timeline-section" id="timeline" data-section="timeline">
+    {{ section_heading('Our story', 'The moments that brought us here') }}
+    <ol class="timeline-list">
+      {% for item in content.timeline %}
+      <li class="timeline-item reveal-on-scroll">
+        <p class="timeline-date">{{ item.date|default('A special day') }}</p>
+        <h3>{{ item.title|default('A memory') }}</h3>
+        {% if item.description %}<p>{{ item.description }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+{%- endmacro %}
+
+{% macro memory_cards(content, kind='memory') -%}
+  {% if kind == 'reasons' and content.love_mode and content.reasons %}{{ reasons_100(content) }}{% else %}
+  {% set cards = content.appreciation_cards if kind == 'reasons' else content.memory_cards %}
+  {% if cards %}
+  <section class="section cards-section" id="{{ kind }}" data-section="{{ kind }}">
+    {{ section_heading('From the heart' if kind == 'reasons' else 'Stories we share', 'Why you matter so much' if kind == 'reasons' else 'Little moments, big memories') }}
+    <div class="story-grid">
+      {% for item in cards %}
+      <article class="story-card reveal-on-scroll">
+        <span class="story-number">{{ '%02d'|format(loop.index) }}</span>
+        <h3>{{ item.title|default('A favorite thing') if item is mapping else 'A favorite thing' }}</h3>
+        <p>{{ item.text|default('') if item is mapping else item }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+  {% endif %}
+{%- endmacro %}
+
+{% macro letter(content) -%}
+  {% if content.envelope and (content.letter or content.message) %}{{ love_letter(content) }}
+  {% elif content.letter %}
+  <section class="section letter-section" id="letter" data-section="letter">
+    <div class="letter-shell reveal-on-scroll">
+      <div class="letter-copy" data-letter-copy>{{ content.letter }}</div>
+      <button class="button button--quiet" type="button" data-expand-letter aria-expanded="false">{{ content.button_labels.letter|default('Read the letter') }}</button>
+    </div>
+  </section>
+  {% endif %}
+{%- endmacro %}
+
+{% macro events(content) -%}
+  {% if content.events %}
+  <section class="section events-section" id="events" data-section="events">
+    {{ section_heading('Save the date', 'Come celebrate with us') }}
+    <div class="events-grid">
+      {% for event in content.events %}
+      <article class="event-card reveal-on-scroll">
+        <p class="eyebrow">{{ event.datetime|default('Details coming soon') }}</p>
+        <h3>{{ event.name|default('Celebration') }}</h3>
+        {% if event.description %}<p>{{ event.description }}</p>{% endif %}
+        {% if event.venue_name %}<p><strong>{{ event.venue_name }}</strong><br>{{ event.address|default('') }}</p>{% endif %}
+        <div class="event-links">
+          {% if event.map_url %}<a class="text-link" href="{{ event.map_url }}" target="_blank" rel="noopener">View map <span aria-hidden="true">↗</span></a>{% endif %}
+          {% if event.rsvp_url %}<a class="button button--small" href="{{ event.rsvp_url }}" target="_blank" rel="noopener">RSVP <span aria-hidden="true">↗</span></a>{% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+{%- endmacro %}
+
+{% macro videos(content) -%}
+  {% set show_videos = content.videos and 'gallery' not in content.sections %}
+  {% if show_videos or content.voice_messages %}
+  <section class="section media-section" id="media" data-section="videos">
+    {{ section_heading('Press play', 'A few messages for you') }}
+    {% if show_videos %}
+      {% set ns = namespace(items=[]) %}
+      {% for item in content.videos %}{% set ns.items = ns.items + [{'kind': 'video', 'src': item.src, 'poster': item.poster|default(''), 'caption': item.caption|default('')}] %}{% endfor %}
+      {{ collage(ns.items, [], content.collage_layout or {}) }}
+    {% endif %}
+    <div class="video-grid">
+      {% for item in content.voice_messages %}
+      <figure class="voice-card reveal-on-scroll"><figcaption>{{ item.caption|default('A voice note for you') }}</figcaption><audio controls preload="metadata" src="{{ item.src }}"></audio></figure>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+{%- endmacro %}
+
+{% macro quotes(content) -%}
+  {% if content.quotes %}
+  <section class="section quotes-section" data-section="quotes" aria-label="Favorite quotes">
+    {% for quote in content.quotes %}<blockquote class="reveal-on-scroll">“{{ quote.text|default(quote) if quote is mapping else quote }}”{% if quote is mapping and quote.author %}<cite>— {{ quote.author }}</cite>{% endif %}</blockquote>{% endfor %}
+  </section>
+  {% endif %}
+{%- endmacro %}
+
+{% macro surprise(content, interaction='burst') -%}
+  <section class="section surprise-section" id="surprise" data-section="surprise">
+    <div class="surprise-card reveal-on-scroll">
+      <p class="eyebrow">One more thing</p>
+      <h2 data-surprise-message hidden>{{ content.reveal_message }}</h2>
+      <button class="button button--celebrate" type="button" data-surprise="{{ interaction }}" aria-controls="surprise-message">{{ content.button_labels.reveal|default('Reveal the surprise') }}</button>
+    </div>
+  </section>
+{%- endmacro %}
+
+{% macro closing(content) -%}
+  <footer class="closing-section" id="closing" data-section="closing">
+    {% if content.sticker_roles.closing %}<img class="closing-sticker" src="{{ content.sticker_roles.closing }}" alt="" loading="lazy">{% endif %}
+    <p class="eyebrow">{{ content.sender_name and ('From ' ~ content.sender_name) or 'Made especially for you' }}</p>
+    <h2>{{ content.closing_message }}</h2>
+    {% if content.branding_credit %}<p class="credit">Made with WishCraft</p>{% endif %}
+  </footer>
+{%- endmacro %}
+
+
+{% macro marquee(content) -%}
+  {% set words = (content.recipient_names + [content.title, content.subtitle])|select|list %}
+  {% if words %}
+  <div class="marquee" aria-hidden="true"><div class="marquee__track">{% for _ in range(2) %}<span>{% for w in words %}{{ w }} ✦ {% endfor %}{% for w in words %}{{ w }} ✦ {% endfor %}</span>{% endfor %}</div></div>
+  {% endif %}
+{%- endmacro %}
+
+{% macro love_letter(content) -%}
+  {% set names = content.recipient_names|join(' & ') %}
+  <section class="section love-letter" id="letter" data-section="letter" data-nav="Letter">
+    <div class="lovemail" data-lovemail>
+      <button type="button" class="envelope" data-envelope aria-expanded="false" aria-controls="lovemail-paper">
+        <span class="envelope__back"></span>
+        <span class="envelope__card" aria-hidden="true"><i>♥</i></span>
+        <span class="envelope__front"></span>
+        <span class="envelope__flap"></span>
+        <span class="envelope__seal" aria-hidden="true">♥</span>
+        <span class="envelope__hint">Tap to open</span>
+      </button>
+      <article class="lovemail__paper" id="lovemail-paper" data-paper>
+        <div class="lovemail__text" data-typed data-full="{{ (content.letter or content.message) }}">{{ content.letter or content.message }}</div>
+        {% if content.sender_name %}<p class="lovemail__sign">— <strong>{{ content.sender_name }}</strong> ♥</p>{% endif %}
+        <button type="button" class="button button--quiet lovemail__skip" data-skip-typing hidden>Skip the typing</button>
+      </article>
+    </div>
+  </section>
+{%- endmacro %}
+
+{% macro reasons_100(content) -%}
+  {% set total = content.reasons|length %}
+  <section class="section reasons-section" id="reasons" data-section="reasons" data-nav="{{ total }} Reasons">
+    {{ section_heading('From the bottom of my heart', total ~ ' reasons I love you') }}
+    <div class="reasons" data-reasons data-total="{{ total }}">
+      <div class="reasons__meter reveal-on-scroll">
+        <div class="reasons__bar" aria-hidden="true"><i data-reasons-bar></i></div>
+        <p><strong data-reasons-count>0</strong> of {{ total }} opened</p>
+        <button type="button" class="button button--small" data-reason-random>Surprise me ♥</button>
+      </div>
+      <div class="reasons__grid" role="list">
+        {% for reason in content.reasons %}
+        <button type="button" role="listitem" class="heart-tile" style="--n:{{ loop.index0 }}" data-reason="{{ reason }}" data-n="{{ loop.index }}" aria-label="Reason {{ loop.index }}: tap to reveal"><span>{{ loop.index }}</span></button>
+        {% endfor %}
+      </div>
+      <ol class="reasons__list">{% for reason in content.reasons %}<li>{{ reason }}</li>{% endfor %}</ol>
+      <dialog class="reason-pop" data-reason-pop aria-label="A reason I love you">
+        <button type="button" class="reason-pop__close" data-reason-close aria-label="Close">×</button>
+        <p class="reason-pop__n">Reason <b data-reason-n>1</b></p>
+        <p class="reason-pop__text" data-reason-text></p>
+        <div class="reason-pop__nav"><button type="button" class="button button--quiet button--small" data-reason-prev>← Before</button><button type="button" class="button button--small" data-reason-next>Next →</button></div>
+      </dialog>
+      <p class="reasons__done" data-reasons-done hidden>You opened every single one. There are a million more, and I will keep finding them. ♥</p>
+    </div>
+  </section>
+{%- endmacro %}
+
+{% macro gif_rail(content) -%}
+  {% set gifs = content.gif_pack or [] %}
+  {% if gifs|length >= 3 and content.gif_rail %}
+  <section class="gif-rails" aria-hidden="true">
+    {% for direction in ['left', 'right'] %}
+    <div class="gif-rail gif-rail--{{ direction }}"><div class="gif-rail__track">{% for _ in range(2) %}{% for gif in (gifs if direction == 'left' else gifs|reverse|list) %}<img src="{{ gif }}" alt="" loading="lazy" decoding="async">{% endfor %}{% endfor %}</div></div>
+    {% endfor %}
+  </section>
+  {% endif %}
+{%- endmacro %}

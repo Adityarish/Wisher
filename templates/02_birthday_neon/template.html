@@ -1,0 +1,8 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="hero neon-hero"><div class="scanlines" aria-hidden="true"></div>{% if content.media.hero %}<div class="hero__media"><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('Birthday portrait') }}" style="--hero-position:{{ content.media.hero_focal_position }}"></div>{% endif %}<div class="hero__content"><p class="eyebrow">Tonight's headline</p><p class="hero__recipient">{{ content.recipient_names|join(' × ') or 'You' }}</p><h1>{{ content.title }}</h1><p class="lead">{{ content.subtitle }}</p><div class="hero__actions"><button class="button" type="button" data-open-experience data-celebrate>Start the show</button></div></div></section>
+<section class="section marquee" id="story-start"><p aria-label="Celebrate">CELEBRATE · CELEBRATE · CELEBRATE</p></section>
+<section class="section neon-message reveal-on-scroll"><span class="signal">LIVE</span><h2>{{ content.message }}</h2></section>
+{{ ui.videos(content) }}{{ ui.gallery(content) }}{{ ui.memory_cards(content) }}{{ ui.surprise(content, 'burst') }}{{ ui.closing(content) }}
+{% endblock %}
+

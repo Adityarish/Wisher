@@ -1,0 +1,19 @@
+# content/
+
+Each folder here is one wish (one "project"). The folder name is the project name.
+
+```text
+content/mira_birthday/
+├── content.json   optional: names, title, messages, theme
+├── photos/        hero.jpg, 01_our-first-trip.jpg, 02_the-beach.jpg ...
+├── videos/        03_hello.mp4 ...
+├── audios/        song.mp3, voice_mum.mp3 ...
+├── gifs/          sparkle.gif ...
+├── stickers/      sticker_cake.png ...
+└── texts/         title.txt, letter.txt, reasons.txt ...
+```
+
+- `example/` is the demo project that ships with the repository. Copy it to start your own.
+- Everything else in this folder is **private** and ignored by Git (see `.gitignore`).
+- The naming convention, with every rule and example, is in the main [README](../README.md#how-to-name-your-files).
+- Let the computer name your files: `python user_data/helper.py --project mira_birthday`, or use **Help > Smart upload** in the studio.

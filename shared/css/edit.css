@@ -1,0 +1,38 @@
+/* Edit mode: reshape collage pictures by dragging their edges */
+.pill-btn{display:inline-flex;align-items:center;gap:.45rem;height:40px;padding:0 .95rem;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--text);font:800 .85rem var(--sans);cursor:pointer;white-space:nowrap;transition:transform .25s,background .25s,color .25s}
+.pill-btn:hover{transform:translateY(-2px);background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.pill-btn[aria-pressed="true"]{color:#fff;border-color:transparent;background:linear-gradient(120deg,var(--accent),var(--accent-2));box-shadow:0 8px 24px color-mix(in srgb,var(--accent) 45%,transparent)}
+.pill-btn[hidden]{display:none}
+@media(max-width:560px){.pill-btn .pill-text{display:none}.pill-btn{width:40px;padding:0;justify-content:center}}
+
+body.edit-mode .site-nav{transform:none!important}
+body.edit-mode [data-tilt]{transform:none!important}
+body.edit-mode .float-gifs,body.edit-mode .cursor-glow{display:none}
+body.edit-mode .collage{outline:2px dashed color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:10px;border-radius:18px;
+  background-image:linear-gradient(color-mix(in srgb,var(--accent) 9%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--accent) 9%,transparent) 1px,transparent 1px);background-size:calc(100%/var(--cols)) var(--row)}
+body.edit-mode .tile{cursor:default;outline:2px dashed color-mix(in srgb,var(--accent) 60%,transparent);outline-offset:-2px;transition:grid-column .25s,grid-row .25s}
+body.edit-mode .tile::before{display:none}
+body.edit-mode .tile.is-selected{outline:3px solid var(--accent);outline-offset:-3px;z-index:5;box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 22%,transparent),0 20px 50px #0004}
+body.edit-mode .tile figcaption{transform:none;opacity:1}
+body.edit-mode .tile img,body.edit-mode .tile video{pointer-events:none;transform:none!important;filter:none!important}
+
+.rz{position:absolute;z-index:8;display:grid;place-items:center;touch-action:none;opacity:.75;transition:opacity .2s}
+.tile:hover .rz,.tile.is-selected .rz,.rz.is-dragging{opacity:1}
+.rz::before{content:"";display:block;border-radius:99px;background:#fff;box-shadow:0 2px 10px #0006,0 0 0 2px var(--accent);transition:transform .2s}
+.rz:hover::before,.rz.is-dragging::before{transform:scale(1.25)}
+.rz--e{top:0;bottom:0;right:0;width:26px;cursor:ew-resize}.rz--e::before{width:6px;height:44px}
+.rz--s{left:0;right:0;bottom:0;height:26px;cursor:ns-resize}.rz--s::before{width:44px;height:6px}
+.rz--se{right:0;bottom:0;width:38px;height:38px;cursor:nwse-resize}.rz--se::before{width:16px;height:16px;border-radius:50%}
+.rz-badge{position:absolute;z-index:9;left:50%;top:50%;translate:-50% -50%;padding:.4rem .8rem;border-radius:99px;background:#000c;color:#fff;font:800 .95rem var(--sans);letter-spacing:.04em;pointer-events:none;opacity:0;transition:opacity .2s}
+.tile.is-resizing .rz-badge{opacity:1}
+.tile.is-resizing{transition:none}
+
+.edit-bar{position:fixed;z-index:180;left:50%;bottom:max(1rem,env(safe-area-inset-bottom));translate:-50% 0;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.5rem .6rem;width:max-content;max-width:calc(100% - 1.2rem);padding:.6rem .7rem .6rem 1.1rem;
+  border:1px solid var(--line);border-radius:22px;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(18px);box-shadow:0 20px 60px #0005;font:600 .86rem var(--sans);color:var(--text);animation:bar-in .5s cubic-bezier(.2,1.3,.4,1)}
+.edit-bar[hidden]{display:none}
+.edit-bar p{margin:0;max-width:26rem;color:var(--muted);line-height:1.35}
+.edit-bar strong{color:var(--text)}
+.edit-bar .button{min-height:38px;padding:.5rem .95rem;font-size:.82rem}
+.edit-bar kbd{padding:.05rem .35rem;border:1px solid var(--line);border-radius:5px;font:inherit;font-size:.75rem}
+@keyframes bar-in{from{opacity:0;translate:-50% 30px}}
+@media(max-width:640px){.edit-bar p{display:none}}

@@ -1,0 +1,7 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<header class="wish-header"><p class="eyebrow">A wish for the newlyweds</p><p class="crest" aria-hidden="true">W</p><h1>{{ content.title }}</h1><p class="hero__recipient">{{ content.recipient_names|join(' & ') }}</p></header>
+<section class="gallery-hero" id="story-start">{% if content.media.hero %}<img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('Wedding portrait') }}" style="object-position:{{ content.media.hero_focal_position }}">{% endif %}<div class="wish-overlay"><p>{{ content.message }}</p></div></section>
+{{ ui.gallery(content) }}{{ ui.memory_cards(content, 'reasons') }}{{ ui.quotes(content) }}{{ ui.letter(content) }}{{ ui.surprise(content, 'gold') }}{{ ui.closing(content) }}
+{% endblock %}
+

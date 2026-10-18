@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "templates": [
+    {
+      "id": 1,
+      "directory": "01_birthday_pastel",
+      "name": "Pastel Birthday",
+      "occasion_label": "Birthday",
+      "description": "A cheerful pastel party with balloons, a cake moment, and soft photo cards.",
+      "layout": "party",
+      "supported_sections": [
+        "hero",
+        "gallery",
+        "letter",
+        "memories",
+        "surprise",
+        "closing"
+      ],
+      "default_colors": [
+        "#ff8f9d",
+        "#9f8bea",
+        "#fff4e8"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "birthday",
+        "closing"
+      ],
+      "interactions": [
+        "gift",
+        "cake",
+        "confetti",
+        "lightbox"
+      ]
+    },
+    {
+      "id": 2,
+      "directory": "02_birthday_neon",
+      "name": "Neon Birthday",
+      "occasion_label": "Birthday",
+      "description": "An electric night-stage reveal with marquee type and a celebration burst.",
+      "layout": "stage",
+      "supported_sections": [
+        "hero",
+        "gallery",
+        "memories",
+        "videos",
+        "surprise",
+        "closing"
+      ],
+      "default_colors": [
+        "#050510",
+        "#30f2ff",
+        "#ff3fd1"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "celebration"
+      ],
+      "interactions": [
+        "burst",
+        "confetti",
+        "lightbox"
+      ],
+      "scheme": "dark"
+    },
+    {
+      "id": 3,
+      "directory": "03_birthday_scrapbook",
+      "name": "Birthday Scrapbook",
+      "occasion_label": "Birthday",
+      "description": "A tactile desk of taped photos, handwritten notes, and memory cards.",
+      "layout": "scrapbook",
+      "supported_sections": [
+        "hero",
+        "gallery",
+        "letter",
+        "memories",
+        "quotes",
+        "closing"
+      ],
+      "default_colors": [
+        "#efe0c4",
+        "#d85c45",
+        "#446a5b"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "welcome",
+        "closing"
+      ],
+      "interactions": [
+        "photo_reveal",
+        "lightbox",
+        "expand_letter"
+      ]
+    },
+    {
+      "id": 4,
+      "directory": "04_anniversary_story",
+      "name": "Anniversary Story",
+      "occasion_label": "Anniversary",
+      "description": "An editorial love story with a chapter timeline and an intimate letter.",
+      "layout": "editorial",
+      "supported_sections": [
+        "hero",
+        "timeline",
+        "gallery",
+        "letter",
+        "quotes",
+        "reasons",
+        "closing"
+      ],
+      "default_colors": [
+        "#f7f0ea",
+        "#8f3748",
+        "#2f2927"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "love",
+        "flowers"
+      ],
+      "interactions": [
+        "timeline",
+        "expand_letter",
+        "lightbox"
+      ]
+    },
+    {
+      "id": 5,
+      "directory": "05_wedding_invitation",
+      "name": "Wedding Invitation",
+      "occasion_label": "Wedding invitation",
+      "description": "A botanical invitation with couple monogram, schedule, venue, and external RSVP.",
+      "layout": "invitation",
+      "supported_sections": [
+        "hero",
+        "countdown",
+        "events",
+        "gallery",
+        "letter",
+        "closing"
+      ],
+      "default_colors": [
+        "#f7f3e8",
+        "#64745d",
+        "#b8865b"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "flowers"
+      ],
+      "interactions": [
+        "envelope",
+        "countdown",
+        "lightbox"
+      ]
+    },
+    {
+      "id": 6,
+      "directory": "06_wedding_wishes",
+      "name": "Wedding Wishes",
+      "occasion_label": "Wedding wishes",
+      "description": "A luminous ivory-and-gold gallery for sincere wishes and graceful portraits.",
+      "layout": "gallery",
+      "supported_sections": [
+        "hero",
+        "gallery",
+        "letter",
+        "quotes",
+        "surprise",
+        "reasons",
+        "closing"
+      ],
+      "default_colors": [
+        "#fffdf7",
+        "#b39052",
+        "#302a23"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "flowers",
+        "closing"
+      ],
+      "interactions": [
+        "photo_reveal",
+        "expand_letter",
+        "lightbox"
+      ]
+    },
+    {
+      "id": 7,
+      "directory": "07_romantic_surprise",
+      "name": "Romantic Surprise",
+      "occasion_label": "Romantic surprise",
+      "description": "A private sealed-letter experience with restrained hearts and a final promise.",
+      "layout": "letter",
+      "supported_sections": [
+        "hero",
+        "letter",
+        "gallery",
+        "reasons",
+        "surprise",
+        "closing"
+      ],
+      "default_colors": [
+        "#25171c",
+        "#e6a6ac",
+        "#fff5ef"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "love",
+        "hug"
+      ],
+      "interactions": [
+        "envelope",
+        "expand_letter",
+        "hearts",
+        "lightbox"
+      ],
+      "scheme": "dark"
+    },
+    {
+      "id": 8,
+      "directory": "08_friendship_memories",
+      "name": "Friendship Memories",
+      "occasion_label": "Friendship and family",
+      "description": "A colorful sticker-board filled with shared memories and candid photos.",
+      "layout": "board",
+      "supported_sections": [
+        "hero",
+        "memories",
+        "gallery",
+        "videos",
+        "quotes",
+        "closing"
+      ],
+      "default_colors": [
+        "#fff8dc",
+        "#3858dc",
+        "#ff6d59"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "hug",
+        "celebration"
+      ],
+      "interactions": [
+        "photo_reveal",
+        "lightbox",
+        "burst"
+      ]
+    },
+    {
+      "id": 9,
+      "directory": "09_thank_you",
+      "name": "Thank You",
+      "occasion_label": "Thank you",
+      "description": "Warm minimalism with generous type, appreciation cards, and quiet movement.",
+      "layout": "minimal",
+      "supported_sections": [
+        "hero",
+        "reasons",
+        "letter",
+        "gallery",
+        "closing"
+      ],
+      "default_colors": [
+        "#f2eee6",
+        "#bc674b",
+        "#263a34"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "flowers",
+        "closing"
+      ],
+      "interactions": [
+        "expand_letter",
+        "scroll_reveal",
+        "lightbox"
+      ]
+    },
+    {
+      "id": 10,
+      "directory": "10_congratulations",
+      "name": "Congratulations",
+      "occasion_label": "Achievement",
+      "description": "A bold achievement poster with spotlight typography and a trophy reveal.",
+      "layout": "poster",
+      "supported_sections": [
+        "hero",
+        "achievement",
+        "gallery",
+        "quotes",
+        "surprise",
+        "closing"
+      ],
+      "default_colors": [
+        "#101c37",
+        "#ffcc48",
+        "#f4f1e8"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "celebration"
+      ],
+      "interactions": [
+        "spotlight",
+        "confetti",
+        "lightbox"
+      ],
+      "scheme": "dark"
+    },
+    {
+      "id": 11,
+      "directory": "11_festival_greetings",
+      "name": "Festival Greetings",
+      "occasion_label": "Festival",
+      "description": "A glowing greeting card with ornamental lights and configurable festive colors.",
+      "layout": "festival",
+      "supported_sections": [
+        "hero",
+        "gallery",
+        "letter",
+        "quotes",
+        "surprise",
+        "closing"
+      ],
+      "default_colors": [
+        "#3c1038",
+        "#f0a62e",
+        "#fff2d1"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "welcome",
+        "celebration"
+      ],
+      "interactions": [
+        "lights",
+        "gift",
+        "confetti"
+      ],
+      "scheme": "dark"
+    },
+    {
+      "id": 12,
+      "directory": "12_custom_surprise",
+      "name": "Custom Surprise",
+      "occasion_label": "Any occasion",
+      "description": "A modular editorial layout with movable sections and a customizable reveal.",
+      "layout": "modular",
+      "supported_sections": [
+        "hero",
+        "countdown",
+        "timeline",
+        "events",
+        "gallery",
+        "videos",
+        "memories",
+        "reasons",
+        "letter",
+        "quotes",
+        "surprise",
+        "closing"
+      ],
+      "default_colors": [
+        "#f4f6f8",
+        "#5c4ce5",
+        "#19202a"
+      ],
+      "preferred_asset_roles": [
+        "hero",
+        "welcome",
+        "closing"
+      ],
+      "interactions": [
+        "opening_choice",
+        "countdown",
+        "lightbox",
+        "expand_letter"
+      ]
+    }
+  ]
+}

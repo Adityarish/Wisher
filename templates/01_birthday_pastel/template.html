@@ -1,0 +1,12 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="hero birthday-hero">
+  {% if content.media.hero %}<div class="hero__media"><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('A favorite birthday memory') }}" style="--hero-position:{{ content.media.hero_focal_position }}"></div>{% endif %}
+  <div class="balloon balloon--one" aria-hidden="true"></div><div class="balloon balloon--two" aria-hidden="true"></div>
+  <div class="hero__content"><p class="eyebrow">A tiny party for</p><p class="hero__recipient">{{ content.recipient_names|join(' & ') or 'someone wonderful' }}</p><h1>{{ content.title }}</h1><p class="lead">{{ content.subtitle }}</p><div class="hero__actions"><button class="button" type="button" data-open-experience>{{ content.button_labels.open }}</button></div></div>
+</section>
+<div id="story-start"></div>
+<section class="section cake-section reveal-on-scroll"><div class="cake" aria-hidden="true"><span class="flame"></span><span class="candle"></span><span class="cake-top"></span><span class="cake-base"></span></div><div><p class="eyebrow">Birthday wish</p><h2>{{ content.message }}</h2><button class="button button--quiet" type="button" data-celebrate>Blow out the candle</button></div></section>
+{{ ui.gallery(content) }}{{ ui.memory_cards(content) }}{{ ui.letter(content) }}{{ ui.surprise(content, 'cake') }}{{ ui.closing(content) }}
+{% endblock %}
+

@@ -1,0 +1,2 @@
+"""WishCraft local editor."""
+

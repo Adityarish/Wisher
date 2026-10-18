@@ -1,0 +1,7 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="sealed-intro"><div class="envelope" aria-hidden="true"><span class="envelope__flap"></span><span class="seal">♥</span></div><p class="eyebrow">Private & personal</p><h1>{{ content.title }}</h1><p class="hero__recipient">For {{ content.recipient_names|join(' & ') or 'you' }}</p><button class="button" type="button" data-open-experience>{{ content.button_labels.open }}</button></section>
+<section class="section intimate-message" id="story-start"><p class="eyebrow">What I need you to know</p><h2>{{ content.message }}</h2>{% if content.media.hero %}<figure><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('A moment close to the heart') }}" style="object-position:{{ content.media.hero_focal_position }}"></figure>{% endif %}</section>
+{{ ui.letter(content) }}{{ ui.memory_cards(content, 'reasons') }}{{ ui.gallery(content) }}{{ ui.surprise(content, 'hearts') }}{{ ui.closing(content) }}
+{% endblock %}
+

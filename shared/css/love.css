@@ -1,0 +1,70 @@
+/* Love letter envelope + "100 reasons" grid */
+:root{--rose:#d94f70;--rose-deep:#a8325a;--paper:#fff8ef}
+
+/* ---------- Envelope ---------- */
+.lovemail{display:grid;justify-items:center;gap:1.5rem}
+.envelope{display:none}
+.js .envelope{display:block;position:relative;width:min(440px,88vw);aspect-ratio:1.5;padding:0;border:0;background:none;cursor:pointer;perspective:1100px;filter:drop-shadow(0 28px 38px color-mix(in srgb,var(--rose-deep) 45%,transparent));
+  transition:transform .6s,opacity .7s,max-height .8s;animation:env-float 4.5s ease-in-out infinite}
+.envelope:hover{transform:translateY(-6px) rotate(-1deg)}
+.envelope>span{position:absolute;display:block}
+.envelope__back{inset:0;border-radius:10px;background:linear-gradient(160deg,#f08ba0,var(--rose))}
+.envelope__card{left:8%;right:8%;top:6%;height:80%;border-radius:6px;background:var(--paper);display:grid;place-items:center;color:var(--rose);font-size:2.2rem;transition:transform 1s cubic-bezier(.3,1.2,.4,1) .55s;box-shadow:0 0 0 1px #0001}
+.envelope__front{inset:0;border-radius:10px;background:linear-gradient(200deg,#f7a1b4,#e0607f);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%);filter:drop-shadow(0 -2px 3px #0002)}
+.envelope__flap{left:0;right:0;top:0;height:58%;background:linear-gradient(180deg,#ff9db1,var(--rose));clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:50% 0;transform:rotateX(0);backface-visibility:visible;z-index:3;transition:transform .9s cubic-bezier(.4,0,.2,1),z-index 0s .45s}
+.envelope__seal{left:50%;top:50%;width:3.4rem;height:3.4rem;margin:-1.7rem 0 0 -1.7rem;display:grid!important;place-items:center;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff6f8f,#a8143d);color:#ffd5df;font-size:1.5rem;z-index:4;box-shadow:0 6px 14px #0005;animation:heartbeat 1.6s ease-in-out infinite;transition:transform .5s,opacity .5s}
+.envelope__hint{left:0;right:0;bottom:-2.2rem;text-align:center;font-weight:800;font-size:.85rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);animation:blink 1.8s ease-in-out infinite}
+.envelope.is-open{animation:none;cursor:default}
+.envelope.is-open .envelope__flap{transform:rotateX(180deg);z-index:1}
+.envelope.is-open .envelope__seal{transform:scale(2.4);opacity:0}
+.envelope.is-open .envelope__card{transform:translateY(-58%) rotate(-2deg)}
+.envelope.is-open .envelope__hint{opacity:0}
+.envelope.is-gone{opacity:0;transform:translateY(40px) scale(.8);max-height:0;aspect-ratio:auto;height:0;overflow:hidden;pointer-events:none}
+.js .lovemail__paper{display:none}
+.lovemail__paper{position:relative;width:min(760px,100%);padding:clamp(2rem,6vw,4.5rem);border-radius:6px;background:var(--paper);color:#3b2530;box-shadow:0 30px 80px color-mix(in srgb,var(--rose-deep) 35%,transparent);
+  background-image:repeating-linear-gradient(transparent 0 2.1rem,#e6b9c444 2.1rem calc(2.1rem + 1px))}
+.lovemail__paper::before{content:"♥";position:absolute;top:-1.1rem;left:50%;translate:-50% 0;display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--rose);color:#fff}
+.lovemail.is-read .lovemail__paper{display:block;animation:paper-in 1s cubic-bezier(.2,1.2,.3,1) both}
+.lovemail__greeting{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.4rem);color:var(--rose-deep);margin-bottom:1rem}
+.lovemail__text{font-family:var(--serif);font-size:clamp(1.15rem,2.2vw,1.5rem);line-height:2.1rem;white-space:pre-wrap;min-height:4rem}
+.lovemail__text.is-typing::after{content:"▍";margin-left:2px;color:var(--rose);animation:blink .7s steps(1) infinite}
+.lovemail__sign{margin:2rem 0 0;font-family:var(--serif);font-size:1.3rem;text-align:right;color:var(--rose-deep);opacity:1;transition:opacity .8s}
+.js .lovemail__sign.is-waiting{opacity:0}
+.lovemail__skip{margin-top:1rem}
+.love-burst{position:fixed;z-index:140;pointer-events:none;font-size:1.4rem;color:var(--rose);animation:love-rise var(--t,1.8s) ease-out forwards}
+
+/* ---------- 100 reasons ---------- */
+.reasons{display:grid;grid-template-columns:minmax(0,1fr);gap:1.8rem;min-width:0}
+.reasons__meter{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 1.5rem;text-align:center}
+.reasons__meter p{margin:0;color:var(--muted)}.reasons__meter strong{color:var(--rose);font-size:1.4rem}
+.reasons__bar{flex:1 1 220px;max-width:340px;height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.reasons__bar i{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(var(--p,0));background:linear-gradient(90deg,#ff8aa3,var(--rose),#ffb347);transition:transform .6s cubic-bezier(.2,1.2,.4,1)}
+.reasons__grid{display:none;grid-template-columns:repeat(auto-fill,minmax(clamp(46px,8.5vw,78px),1fr));gap:clamp(.25rem,1vw,.6rem);max-width:1000px;margin:auto;width:100%}
+.js .reasons__grid{display:grid}.js .reasons__list{display:none}
+.reasons__list{max-width:700px;margin:auto;font-family:var(--serif);font-size:1.15rem;line-height:1.7}
+.heart-tile{--mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E");
+  position:relative;aspect-ratio:1;border:0;padding:0;cursor:pointer;color:#fff;font-weight:800;font-size:clamp(.7rem,1.6vw,.95rem);
+  background:linear-gradient(145deg,#ff9bb0,var(--rose));-webkit-mask:var(--mask) center/contain no-repeat;mask:var(--mask) center/contain no-repeat;
+  animation:heartbeat 2.4s ease-in-out infinite;animation-delay:calc(var(--n)*-80ms);transition:filter .3s,transform .25s}
+.heart-tile span{position:relative;top:-.05em}
+.heart-tile:hover,.heart-tile:focus-visible{transform:scale(1.22);filter:brightness(1.12) saturate(1.3);z-index:2;animation-play-state:paused;outline:0}
+.heart-tile.is-opened{background:linear-gradient(145deg,#ffd1dc,#ffb3c4);color:var(--rose-deep);animation:none;filter:saturate(.9)}
+.heart-tile.is-opened:hover{transform:scale(1.15)}
+.reason-pop{width:min(520px,calc(100% - 2rem));padding:clamp(2rem,6vw,3rem);border:0;border-radius:28px;text-align:center;color:#3b2530;
+  background:radial-gradient(circle at 20% 0,#fff,transparent 55%),linear-gradient(160deg,#fff1f4,#ffd9e2);box-shadow:0 40px 120px #5a0b2899;overflow:visible}
+.reason-pop::backdrop{background:#2a0a1ccc;backdrop-filter:blur(6px)}
+.reason-pop[open]{animation:pop-heart .6s cubic-bezier(.2,1.5,.4,1)}
+.reason-pop__n{margin:0 0 1rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--rose);font-size:.8rem}.reason-pop__n b{font-size:1.6rem;letter-spacing:0}
+.reason-pop__text{font-family:var(--serif);font-size:clamp(1.4rem,4vw,2rem);line-height:1.4;margin:0 0 1.8rem;min-height:5rem}
+.reason-pop__nav{display:flex;justify-content:center;gap:.8rem}
+.reason-pop .button--quiet{color:var(--rose-deep);border-color:var(--rose)}
+.reason-pop__close{position:absolute;right:.8rem;top:.8rem;width:40px;height:40px;border:0;border-radius:50%;background:#fff;color:var(--rose-deep);font-size:1.6rem;cursor:pointer}
+.reasons__done{text-align:center;font-family:var(--serif);font-size:clamp(1.2rem,3vw,1.8rem);color:var(--rose)}
+
+@keyframes env-float{50%{transform:translateY(-10px) rotate(.6deg)}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.12)}30%{transform:scale(1)}45%{transform:scale(1.07)}}
+@keyframes blink{50%{opacity:.25}}
+@keyframes paper-in{from{opacity:0;transform:translateY(60px) scale(.88) rotate(-2deg)}}
+@keyframes pop-heart{from{transform:scale(.3) rotate(-8deg);opacity:0}}
+@keyframes love-rise{to{transform:translate(var(--dx),-70vh) rotate(var(--r)) scale(1.6);opacity:0}}
+@media(prefers-reduced-motion:reduce){.envelope,.heart-tile,.envelope__seal,.envelope__hint{animation:none}.envelope__card,.envelope__flap{transition:none}}

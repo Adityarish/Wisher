@@ -1,0 +1,7 @@
+{% extends '_base.html' %}{% import '_macros.html' as ui %}
+{% block content %}
+<section class="hero anniversary-hero">{% if content.media.hero %}<div class="hero__media"><img src="{{ content.media.hero }}" alt="{{ content.media.hero_alt|default('A treasured moment together') }}" style="--hero-position:{{ content.media.hero_focal_position }}"></div>{% endif %}<div class="hero__content"><p class="eyebrow">Our anniversary edition</p><p class="issue">EST. {{ content.event_datetime[:4] if content.event_datetime else 'TOGETHER' }}</p><h1>{{ content.title }}</h1><p class="lead">{{ content.message }}</p><button class="button" type="button" data-open-experience>Read our story</button></div></section>
+<section class="section chapter-opener" id="story-start"><span>Chapter one</span><h2>{{ content.subtitle }}</h2></section>
+{{ ui.timeline(content) }}{{ ui.gallery(content) }}{{ ui.memory_cards(content, 'reasons') }}{{ ui.quotes(content) }}{{ ui.letter(content) }}{{ ui.surprise(content, 'hearts') }}{{ ui.closing(content) }}
+{% endblock %}
+
